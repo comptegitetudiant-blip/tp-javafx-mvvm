@@ -1,15 +1,21 @@
 package com.example.exercice.view;
 
+import com.example.exercice.Navigator;
+import com.example.exercice.auth.AuthService;
 import com.example.exercice.model.Todo;
+import com.example.exercice.view.LoginView;
+import com.example.exercice.viewmodel.LoginViewModel;
 import com.example.exercice.viewmodel.TodoViewModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.beans.binding.Bindings;
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class TodoView {
     @FXML private TextField txtNew;
@@ -17,6 +23,8 @@ public class TodoView {
     @FXML private TableView<Todo> tblTodos;
     @FXML private CheckBox chkShowDone;
     @FXML private Button btnDelete;
+    @FXML private Button btnDeleteAll;
+    @FXML private Button btnLogout;
     @FXML private Label lblNewTitlePreview;
     @FXML private Label lblWelcome;
 
@@ -39,21 +47,6 @@ public class TodoView {
         txtNew.textProperty().bindBidirectional(vm.newTitleProperty());
         btnAdd.disableProperty().bind(vm.canAddProperty().not());
         tblTodos.setItems(vm.items());
-
-        TableColumn<Todo, String> titleColumn = new TableColumn<>("Titre");
-        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-
-        TableColumn<Todo, Boolean> doneColumn = new TableColumn<>("Fait");
-        doneColumn.setCellValueFactory(new PropertyValueFactory<>("done"));
-        doneColumn.setCellFactory(CheckBoxTableCell.forTableColumn(doneColumn));
-
-        TableColumn<Todo, Number> lengthColumn = new TableColumn<>("Longueur");
-        lengthColumn.setCellValueFactory(cellData ->
-                new SimpleIntegerProperty(cellData.getValue().getTitle().length()).asObject()
-        );
-
-        tblTodos.getColumns().addAll(titleColumn, doneColumn, lengthColumn);
-
         chkShowDone.selectedProperty().bindBidirectional(vm.showDoneProperty());
         btnDelete.disableProperty().bind(vm.canDeleteProperty().not());
 
@@ -64,5 +57,17 @@ public class TodoView {
         lblWelcome.textProperty().bind(
                 Bindings.concat("Bienvenue, ", vm.userNameProperty())
         );
+
+        btnDeleteAll.setOnAction(e -> vm.deleteAll());
+
+        btnLogout.setOnAction(e -> {
+            try {
+                var loginVM = new LoginViewModel(new AuthService());
+                var loginView = new LoginView(loginVM);
+                Navigator.goTo(new Scene(loginView.getRoot(), 420, 260), "Connexion");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 }

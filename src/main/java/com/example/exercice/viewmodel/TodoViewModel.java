@@ -67,6 +67,10 @@ public class TodoViewModel {
         }
     }
 
+    public void deleteAll() {
+        repo.clear();
+    }
+
     public void toggleDone(Todo t) {
         if (t != null) {
             t.setDone(!t.isDone());
