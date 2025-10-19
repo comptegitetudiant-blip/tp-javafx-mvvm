@@ -39,4 +39,21 @@ On utilise `bindBidirectional` pour **synchroniser** la propriété `newTitle` d
 - À l’utilisateur de saisir un titre dans le champ de texte, ce qui met à jour `newTitle` dans le ViewModel.
 - Au ViewModel de mettre à jour le champ de texte si `newTitle` change programmatiquement.
  
+---
 
+# Partie 4 — Évolution de la Todo
+## Q8 : Pourquoi utilise-t-on CheckBoxTableCell pour la colonne "Fait" ?
+
+- On utilise `CheckBoxTableCell` pour la colonne "Fait" car cela permet d'afficher une case à cocher (`CheckBox`) dans chaque cellule de la colonne. Cela facilite la modification de l'état "fait/non fait" d'une tâche directement depuis la vue, en liant visuellement et fonctionnellement la propriété `done` de chaque objet `Todo` à une case à cocher.
+
+---
+
+# Partie 5 — Amélioration du Login
+
+## Q9 : Navigation entre l’écran Login et l’écran Todo
+La navigation entre les écrans Login et Todo est gérée par la classe `Navigator`. Voici comment cela fonctionne :
+
+1. **Initialisation du `Navigator`** : Dans la méthode `start` de la classe `App`, le `Navigator` est initialisé avec le `Stage` principal de l'application.
+2. **Changement de scène** : La méthode `goTo` de `Navigator` est utilisée pour changer la scène affichée par le `Stage` principal.
+3. **Mécanisme de navigation** : Le `Navigator` utilise une instance statique de `Stage` pour changer la scène affichée.
+4. **Navigation depuis le LoginViewModel** : Lorsqu'un utilisateur se connecte avec succès, le `LoginViewModel` appelle la méthode `setOnSuccess`, qui crée une nouvelle scène pour l'écran Todo et utilise `Navigator.goTo` pour afficher cette scène.
