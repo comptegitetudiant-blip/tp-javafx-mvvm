@@ -23,7 +23,7 @@ public class TodoViewModel {
         this.filtered = new FilteredList<>(source, this::match);
         canAdd.bind(Bindings.createBooleanBinding(() -> {
             String s = newTitle.get();
-            return s != null && s.trim().length() >= 3;
+            return s != null && s.trim().length() >= 5; //Changement de 3 à 5 caracteres
         }, newTitle));
         canDelete.bind(selected.isNotNull());
         showDone.addListener((obs, o, v) -> recomputePredicate());
