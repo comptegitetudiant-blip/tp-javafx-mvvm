@@ -2,19 +2,22 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<VBox spacing="10" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
-    <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
-    <Label text="Mes tâches" style="-fx-font-size:16px; -fx-font-weight:bold;"/>
-    <HBox spacing="8">
-        <TextField fx:id="txtNew" promptText="Nouvelle tâche"/>
-        <Button fx:id="btnAdd" text="Ajouter"/>
-        <Button fx:id="btnDel" text="Supprimer"/>
-        <CheckBox fx:id="chkShowDone" text="Afficher terminées"/>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" spacing="10" fx:controller="com.example.exercice.view.TodoView">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10" />
+    </padding>
+
+    <HBox spacing="10">
+        <TextField fx:id="txtNew" promptText="Nouvelle tâche" />
+        <Button fx:id="btnAdd" text="Ajouter" />
     </HBox>
-    <TableView fx:id="table" prefHeight="320" editable="true">
-        <columns>
-            <TableColumn fx:id="colTitle" text="Titre" prefWidth="360"/>
-            <TableColumn fx:id="colDone"  text="Fait"  prefWidth="120" editable="true"/>
-        </columns>
-    </TableView>
+
+    <!-- Ajout du Label pour l'Exercice 3 -->
+    <Label text="Vous allez ajouter : " />
+    <Label fx:id="lblNewTitlePreview" />
+
+    <ListView fx:id="lstTodos" />
+    <CheckBox fx:id="chkShowDone" text="Afficher les tâches terminées" />
+    <Button fx:id="btnDelete" text="Supprimer" />
 </VBox>

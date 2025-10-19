@@ -26,6 +26,17 @@ La classe `FilteredList<Todo>` permet de **filtrer dynamiquement** la liste des 
 - **Rôle** : `showDone` est une propriété booléenne (`BooleanProperty`) qui détermine si les tâches terminées doivent être affichées.
 - **Lien avec la Vue** : Elle est généralement reliée à une case à cocher dans la vue (`TodoView.fxml` ou `TodoView.java`). Lorsqu’elle change, elle met à jour le prédicat du `FilteredList<Todo>`.
 
+---
 
+# Partie 3 — Liens View ↔ ViewModel
+
+## Q6 : Différence entre `bind(...)` et `bindBidirectional(...)`
+- **`bind(...)`** : Crée un **lien unidirectionnel**. La cible est mise à jour lorsque la source change, mais pas l’inverse.
+- **`bindBidirectional(...)`** : Crée un **lien bidirectionnel**. La cible et la source se mettent à jour mutuellement.
+
+## Q7 : Pourquoi utilise-t-on `bindBidirectional` ici ?
+On utilise `bindBidirectional` pour **synchroniser** la propriété `newTitle` du ViewModel avec le champ de texte (`TextField`) de la vue. Cela permet :
+- À l’utilisateur de saisir un titre dans le champ de texte, ce qui met à jour `newTitle` dans le ViewModel.
+- Au ViewModel de mettre à jour le champ de texte si `newTitle` change programmatiquement.
  
 
