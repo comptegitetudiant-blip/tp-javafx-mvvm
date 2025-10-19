@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.exercice.view.TodoView" spacing="10">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10" />
+    </padding>
+
+    <Label fx:id="lblWelcome" style="-fx-font-weight: bold;" />
+
+    <HBox spacing="10">
+        <TextField fx:id="txtNew" promptText="Nouvelle tâche" />
+        <Button fx:id="btnAdd" text="Ajouter" />
+    </HBox>
+
+    <Label text="Vous allez ajouter : " />
+    <Label fx:id="lblNewTitlePreview" />
+
+    <TableView fx:id="tblTodos">
+        <columns>
+            <TableColumn text="Titre" prefWidth="200.0">
+                <cellValueFactory>
+                    <PropertyValueFactory property="title" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Fait" prefWidth="50.0">
+                <cellValueFactory>
+                    <PropertyValueFactory property="done" />
+                </cellValueFactory>
+                <cellFactory>
+                    <CheckBoxTableCell />
+                </cellFactory>
+            </TableColumn>
+            <TableColumn text="Longueur" prefWidth="70.0">
+                <cellValueFactory>
+                    <PropertyValueFactory property="titleLength" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Date limite" prefWidth="100.0">
+                <cellValueFactory>
+                    <PropertyValueFactory property="deadline" />
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+    </TableView>
+
+    <CheckBox fx:id="chkShowDone" text="Afficher les tâches terminées" />
+    <HBox spacing="10">
+        <Button fx:id="btnDelete" text="Supprimer" />
+        <Button fx:id="btnDeleteAll" text="Tout supprimer" />
+        <Button fx:id="btnLogout" text="Déconnexion" />
+    </HBox>
+</VBox>
