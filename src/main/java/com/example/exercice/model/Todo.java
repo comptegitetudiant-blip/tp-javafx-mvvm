@@ -1,16 +1,19 @@
 package com.example.exercice.model;
 
 import javafx.beans.property.*;
+import java.time.LocalDate;
 
 public class Todo {
     private final String id;
     private final StringProperty title = new SimpleStringProperty();
     private final BooleanProperty done = new SimpleBooleanProperty(false);
+    private final ObjectProperty<LocalDate> deadline = new SimpleObjectProperty<>();
 
-    public Todo(String id, String title, boolean done) {
+    public Todo(String id, String title, boolean done, LocalDate deadline) {
         this.id = id;
         this.title.set(title);
         this.done.set(done);
+        this.deadline.set(deadline);
     }
 
     public String getId() {
@@ -39,6 +42,18 @@ public class Todo {
 
     public BooleanProperty doneProperty() {
         return done;
+    }
+
+    public LocalDate getDeadline() {
+        return deadline.get();
+    }
+
+    public void setDeadline(LocalDate v) {
+        deadline.set(v);
+    }
+
+    public ObjectProperty<LocalDate> deadlineProperty() {
+        return deadline;
     }
 
     public int getTitleLength() {
