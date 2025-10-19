@@ -15,33 +15,89 @@ public class TodoViewModel {
     private final ReadOnlyBooleanWrapper canAdd = new ReadOnlyBooleanWrapper();
     private final ReadOnlyBooleanWrapper canDelete = new ReadOnlyBooleanWrapper();
     private final BooleanProperty showDone = new SimpleBooleanProperty(false);
+    private final StringProperty userName = new SimpleStringProperty();
     private final ObservableList<Todo> source;
     private final FilteredList<Todo> filtered;
-    public TodoViewModel(TodoRepository repo){
+
+    public TodoViewModel(TodoRepository repo, String userName) {
         this.repo = repo;
+        this.userName.set(userName);
         this.source = repo.findAll();
         this.filtered = new FilteredList<>(source, this::match);
+
         canAdd.bind(Bindings.createBooleanBinding(() -> {
             String s = newTitle.get();
-            return s != null && s.trim().length() >= 5; //Changement de 3 à 5 caracteres
+            return s != null && s.trim().length() >= 5;
         }, newTitle));
+
         canDelete.bind(selected.isNotNull());
         showDone.addListener((obs, o, v) -> recomputePredicate());
         source.forEach(this::watchTodo);
         source.addListener((ListChangeListener<Todo>) c -> {
-            while (c.next()){ if (c.wasAdded()) c.getAddedSubList().forEach(this::watchTodo); }
+            while (c.next()) {
+                if (c.wasAdded()) {
+                    c.getAddedSubList().forEach(this::watchTodo);
+                }
+            }
         });
     }
-    private void watchTodo(Todo t){ t.doneProperty().addListener((obs, ov, nv) -> recomputePredicate()); }
-    private boolean match(Todo t){ return showDone.get() || !t.isDone(); }
-    private void recomputePredicate(){ filtered.setPredicate(this::match); }
-    public void add(){ if (canAdd.get()){ repo.add(newTitle.get().trim()); newTitle.set(""); } }
-    public void deleteSelected(){ if (selected.get()!=null){ repo.remove(selected.get()); } }
-    public void toggleDone(Todo t){ if (t != null) t.setDone(!t.isDone()); }
-    public ObservableList<Todo> items(){ return filtered; }
-    public StringProperty newTitleProperty(){ return newTitle; }
-    public ObjectProperty<Todo> selectedProperty(){ return selected; }
-    public ReadOnlyBooleanProperty canAddProperty(){ return canAdd.getReadOnlyProperty(); }
-    public ReadOnlyBooleanProperty canDeleteProperty(){ return canDelete.getReadOnlyProperty(); }
-    public BooleanProperty showDoneProperty(){ return showDone; }
+
+    private void watchTodo(Todo t) {
+        t.doneProperty().addListener((obs, ov, nv) -> recomputePredicate());
+    }
+
+    private boolean match(Todo t) {
+        return showDone.get() || !t.isDone();
+    }
+
+    private void recomputePredicate() {
+        filtered.setPredicate(this::match);
+    }
+
+    public void add() {
+        if (canAdd.get()) {
+            repo.add(newTitle.get().trim());
+            newTitle.set("");
+        }
+    }
+
+    public void deleteSelected() {
+        if (selected.get() != null) {
+            repo.remove(selected.get());
+        }
+    }
+
+    public void toggleDone(Todo t) {
+        if (t != null) {
+            t.setDone(!t.isDone());
+        }
+    }
+
+    public ObservableList<Todo> items() {
+        return filtered;
+    }
+
+    public StringProperty newTitleProperty() {
+        return newTitle;
+    }
+
+    public ObjectProperty<Todo> selectedProperty() {
+        return selected;
+    }
+
+    public ReadOnlyBooleanProperty canAddProperty() {
+        return canAdd.getReadOnlyProperty();
+    }
+
+    public ReadOnlyBooleanProperty canDeleteProperty() {
+        return canDelete.getReadOnlyProperty();
+    }
+
+    public BooleanProperty showDoneProperty() {
+        return showDone;
+    }
+
+    public StringProperty userNameProperty() {
+        return userName;
+    }
 }

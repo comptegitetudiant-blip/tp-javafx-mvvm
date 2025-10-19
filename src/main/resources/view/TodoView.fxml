@@ -8,16 +8,20 @@
         <Insets top="10" right="10" bottom="10" left="10" />
     </padding>
 
+    <Label fx:id="lblWelcome" style="-fx-font-weight: bold;"/>
+
     <HBox spacing="10">
         <TextField fx:id="txtNew" promptText="Nouvelle tâche" />
         <Button fx:id="btnAdd" text="Ajouter" />
     </HBox>
 
-    <!-- Ajout du Label pour l'Exercice 3 -->
     <Label text="Vous allez ajouter : " />
     <Label fx:id="lblNewTitlePreview" />
 
-    <ListView fx:id="lstTodos" />
+    <TableView fx:id="tblTodos">
+        <!-- Les colonnes sont configurées dans TodoView.java -->
+    </TableView>
+
     <CheckBox fx:id="chkShowDone" text="Afficher les tâches terminées" />
     <Button fx:id="btnDelete" text="Supprimer" />
 </VBox>
